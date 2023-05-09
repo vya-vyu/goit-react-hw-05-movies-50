@@ -20,5 +20,5 @@ const Movies = () => {
     </>
   );
 };
-
+//r
 export default Movies;
