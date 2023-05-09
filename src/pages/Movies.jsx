@@ -4,7 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getSearchMovies } from 'services/moviesApi';
 const Movies = () => {
-  const [searchName, setSearchName] = useSearchParams();
+  const [searchName] = useSearchParams();
 
   const [movies, setMovies] = useState(null);
   const query = searchName.get('query');
