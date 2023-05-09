@@ -1,7 +1,7 @@
 import { useSearchParams } from 'react-router-dom';
 import { useState } from 'react';
 const SerchForm = () => {
-  const [searchName, setSearchName] = useSearchParams();
+  const [, setSearchName] = useSearchParams();
   const [query, setQuery] = useState('');
   const handlSubmit = e => {
     e.preventDefault();
