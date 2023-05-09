@@ -42,3 +42,14 @@ export const getMovieReviews = id => {
     })
     .then(res => res.data.results);
 };
+
+export const getSearchMovies = query => {
+  return axios
+    .get(`search/movie`, {
+      params: {
+        api_key: API_KEY,
+        query,
+      },
+    })
+    .then(res => res.data.results);
+};

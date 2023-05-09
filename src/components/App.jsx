@@ -1,47 +1,41 @@
-import HeaderNav from './HeaderNav/HeaderNav';
 import { Route, Routes, Outlet, Navigate } from 'react-router-dom';
-import Movies from 'pages/Movies';
-import HomePage from 'pages/HomePage';
-import MovieDescription from './MovieDescription/MovieDescription';
-import Cast from './Cast/Cast';
-import Reviews from './Reviews/Reviews';
+import { lazy, Suspense } from 'react';
+
+const Cast = lazy(() => import('./Cast/Cast'));
+const Reviews = lazy(() => import('./Reviews/Reviews'));
+const HeaderNav = lazy(() => import('./HeaderNav/HeaderNav'));
+const MovieDescription = lazy(() =>
+  import('./MovieDescription/MovieDescription')
+);
+const Movies = lazy(() => import('pages/Movies'));
+const HomePage = lazy(() => import('pages/HomePage'));
 
 const MainLayout = () => {
   return (
     <>
       <HeaderNav />
-
-      <Outlet />
+      <Suspense fallback={<h1>Loading...</h1>}>
+        <Outlet />
+      </Suspense>
     </>
   );
 };
 
 export const App = () => {
   return (
-    <div
-    // style={{
-    //   height: '100vh',
-    //   display: 'flex',
-    //   justifyContent: 'center',
-    //   alignItems: 'center',
-    //   fontSize: 40,
-    //   color: '#010101',
-    // }}
-    >
-      <>
-        <Routes>
-          <Route path="/" element={<MainLayout />}>
-            <Route index element={<HomePage />} />
-            <Route path="/movies" element={<Movies />} />
-            <Route path="/movies/:movieId" element={<MovieDescription />}>
-              <Route path="cast" element={<Cast />} />
-              <Route path="reviews" element={<Reviews />} />
-            </Route>
+    <>
+      <Routes>
+        <Route path="/" element={<MainLayout />}>
+          <Route index element={<HomePage />} />
+          <Route path="/movies" element={<Movies />} />
+          <Route path="/movies/:movieId" element={<MovieDescription />}>
+            <Route path="cast" element={<Cast />} />
+            <Route path="reviews" element={<Reviews />} />
           </Route>
+        </Route>
 
-          <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
-      </>
-    </div>
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
+    </>
   );
 };

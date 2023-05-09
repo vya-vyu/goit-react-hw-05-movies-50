@@ -15,8 +15,13 @@ const Cast = () => {
         cast.map(({ id, name, character, profile_path }) => (
           <li key={id}>
             <img
-              src={`https://www.themoviedb.org/t/p/w300/${profile_path}`}
-              alt={name}
+              src={
+                profile_path
+                  ? `https://image.tmdb.org/t/p/w500${profile_path}`
+                  : 'https://vaksi.by/design/verona/images/no_image.png'
+              }
+              alt="name"
+              width="100"
             />
             <h3>{name}</h3>
             <p>Character: {character}</p>

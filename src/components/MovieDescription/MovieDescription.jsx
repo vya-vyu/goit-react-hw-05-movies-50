@@ -1,16 +1,21 @@
-import { useEffect, useState } from 'react';
-import { Link, Outlet, useParams } from 'react-router-dom';
+import GoBack from 'components/GoBack/GoBack';
+import { Suspense, useEffect, useState } from 'react';
+import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
 import { getMovieDetails } from 'services/moviesApi';
 
 const MovieDescription = () => {
+  const location = useLocation();
   const { movieId } = useParams();
   const [movieDetails, setMovieDetails] = useState(null);
   useEffect(() => {
-    getMovieDetails(movieId).then(data => setMovieDetails(data));
+    getMovieDetails(movieId)
+      .then(data => setMovieDetails(data))
+      .catch(err => console.log(err.massege));
   }, [movieId]);
 
   return (
     <>
+      <GoBack />
       {movieDetails && (
         <div>
           <img
@@ -37,13 +42,19 @@ const MovieDescription = () => {
         <p>Additional information</p>
         <ul>
           <li>
-            <Link to="cast">Cast</Link>
+            <Link to="cast" state={location.state}>
+              Cast
+            </Link>
           </li>
           <li>
-            <Link to="reviews">Reviews</Link>
+            <Link to="reviews" state={location.state}>
+              Reviews
+            </Link>
           </li>
         </ul>
-        <Outlet />
+        <Suspense fallback={<h1>Loading...</h1>}>
+          <Outlet />
+        </Suspense>
       </div>
     </>
   );
